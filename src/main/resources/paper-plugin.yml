@@ -1,6 +1,11 @@
 name: ShieldStatusFix
 version: '1.0.0'
-main: ru.kirushkinx.shieldStatusFix.ShieldStatusFix
+main: ru.kirushkinx.shieldstatusfix.ShieldStatusFix
 api-version: '1.21'
-authors: [ kirushkinx ]
-description: Fixes shield status mod for 1.21.4 clients on 1.21.8 server
+author: kirushkinx
+dependencies:
+  server:
+    packetevents:
+      load: BEFORE
+      required: true
+      join-classpath: true

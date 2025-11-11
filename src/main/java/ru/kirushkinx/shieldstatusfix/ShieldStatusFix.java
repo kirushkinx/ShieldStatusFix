@@ -1,4 +1,4 @@
-package ru.kirushkinx;
+package ru.kirushkinx.shieldstatusfix;
 
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityStatus;

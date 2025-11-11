@@ -1,47 +1,38 @@
 plugins {
-    kotlin("jvm") version "2.3.0-Beta2"
-    id("com.gradleup.shadow") version "8.3.0"
+    java
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
-group = "ru.kirushkinx"
+group = "ru.kirushkinx.shieldstatusfix"
 version = "1.0.0"
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
 
 repositories {
     mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/") {
-        name = "papermc-repo"
-    }
+    maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.codemc.io/repository/maven-releases/")
+    maven("https://repo.codemc.io/repository/maven-snapshots/")
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
+    compileOnly("com.github.retrooper:packetevents-spigot:2.10.1")
 }
 
-tasks {
-    runServer {
-        // Configure the Minecraft version for our task.
-        // This is the only required configuration besides applying the plugin.
-        // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.21")
-    }
-}
-
-val targetJavaVersion = 21
-kotlin {
-    jvmToolchain(targetJavaVersion)
-}
-
-tasks.build {
-    dependsOn("shadowJar")
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+    options.release.set(21)
 }
 
 tasks.processResources {
-    val props = mapOf("version" to version)
-    inputs.properties(props)
     filteringCharset = "UTF-8"
     filesMatching("paper-plugin.yml") {
-        expand(props)
+        expand("version" to project.version)
     }
 }
+
