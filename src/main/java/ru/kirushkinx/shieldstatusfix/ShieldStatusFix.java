@@ -34,18 +34,20 @@ public class ShieldStatusFix extends JavaPlugin implements Listener {
         }
     }
 
-    private void sendShieldDisablePacket(Player player) {
+    private void sendShieldDisablePacket(Player victim) {
         WrapperPlayServerEntityStatus packet = new WrapperPlayServerEntityStatus(
-                player.getEntityId(),
+                victim.getEntityId(),
                 (byte) 30 // disable shield status
         );
 
-        for (Player onlinePlayer : getServer().getOnlinePlayers()) {
-            if (onlinePlayer.getWorld().equals(player.getWorld()) &&
-                    onlinePlayer.getLocation().distance(player.getLocation()) <= 128) {
-                PacketEvents.getAPI().getPlayerManager()
-                        .sendPacket(onlinePlayer, packet);
-            }
-        }
+        PacketEvents.getAPI()
+                .getPlayerManager()
+                .sendPacket(victim, packet);
+
+        victim.getTrackedBy().forEach(player ->
+                PacketEvents.getAPI()
+                        .getPlayerManager()
+                        .sendPacket(player, packet)
+        );
     }
 }

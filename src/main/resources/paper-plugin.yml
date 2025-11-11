@@ -1,5 +1,5 @@
 name: ShieldStatusFix
-version: '1.0.0'
+version: '${version}'
 main: ru.kirushkinx.shieldstatusfix.ShieldStatusFix
 api-version: '1.21'
 author: kirushkinx
