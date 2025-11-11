@@ -3,6 +3,7 @@ version: '1.0.0'
 main: ru.kirushkinx.shieldstatusfix.ShieldStatusFix
 api-version: '1.21'
 author: kirushkinx
+description: Restores shield status entity packets for legacy clients (pre-1.21.5) on modern servers
 dependencies:
   server:
     packetevents:
